@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MotoGear.Core.Models
 {
-    class Product
+    public class Product
     {
         public string Id {get; set;}
         [Required]
