@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using MotoGear.Core.Models;
+using MotoGear.Core.ViewModels;
 using MotoGear.DataAccess.InMemory;
 
 namespace MotoGear.WebUI.Controllers
@@ -11,10 +12,12 @@ namespace MotoGear.WebUI.Controllers
     public class ProductManagerController : Controller
     {
         ProductRepo context;
+        ProductCategoryRepo productCategories;
 
         public ProductManagerController()
         {
             context = new ProductRepo();
+            productCategories = new ProductCategoryRepo();
         }
         // GET: ProductManager
         public ActionResult Index()
@@ -25,8 +28,11 @@ namespace MotoGear.WebUI.Controllers
 
         public ActionResult Create()
         {
-            Product product = new Product();
-            return View(product);
+            ProductManagerViewModel viewModel = new ProductManagerViewModel();
+
+            viewModel.Product = new Product();
+            viewModel.ProductCategories = productCategories.Collection();
+            return View(viewModel);
         }
 
         [HttpPost]
@@ -54,7 +60,10 @@ namespace MotoGear.WebUI.Controllers
             }
             else
             {
-                return View(product);
+                ProductManagerViewModel viewModel = new ProductManagerViewModel();
+                viewModel.Product = product;
+                viewModel.ProductCategories = productCategories.Collection();
+                return View(viewModel);
             }
         }
 
