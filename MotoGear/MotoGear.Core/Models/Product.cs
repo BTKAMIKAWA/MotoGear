@@ -8,10 +8,9 @@ using System.Threading.Tasks;
 
 namespace MotoGear.Core.Models
 {
-    public class Product
+    public class Product : BaseEntity
     {
-        public string Id { get; set; }
-        public string Image { get; set; }
+        
         [Required]
         public string Brand { get; set; }
         [Required, MinLength(3)]
@@ -20,12 +19,9 @@ namespace MotoGear.Core.Models
         public string Description { get; set; }
         [Required, Range(0, 1500)]
         public decimal Price { get; set; }
-        [Required, MinLength(5)]
+        [Required]
         public string Category { get; set; }
-        
-        public Product()
-        {
-            this.Id = Guid.NewGuid().ToString();
-        }
+        public string Image { get; set; }
+
     }
 }
