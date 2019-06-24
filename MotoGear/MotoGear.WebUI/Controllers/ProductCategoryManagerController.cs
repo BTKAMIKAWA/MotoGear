@@ -10,13 +10,13 @@ namespace MotoGear.WebUI.Controllers
 {
     public class ProductCategoryManagerController : Controller
     {
-        ProductCategoryRepo context;
+        InMemoryRepository<ProductCategory> context;
 
         public ProductCategoryManagerController()
         {
-            context = new ProductCategoryRepo();
+            context = new InMemoryRepository<ProductCategory>();
         }
-        
+        // GET: ProductManager
         public ActionResult Index()
         {
             List<ProductCategory> productCategories = context.Collection().ToList();
@@ -25,44 +25,46 @@ namespace MotoGear.WebUI.Controllers
 
         public ActionResult Create()
         {
-            ProductCategory productCategories = new ProductCategory();
-            return View(productCategories);
+            ProductCategory productCategory = new ProductCategory();
+            return View(productCategory);
         }
 
         [HttpPost]
-        public ActionResult Create(ProductCategory productCategories)
+        public ActionResult Create(ProductCategory productCategory)
         {
             if (!ModelState.IsValid)
             {
-                return View(productCategories);
+                return View(productCategory);
             }
             else
             {
-                context.Insert(productCategories);
+                context.Insert(productCategory);
                 context.Commit();
 
                 return RedirectToAction("Index");
             }
+
         }
 
         public ActionResult Edit(string Id)
         {
-            ProductCategory productCategories = context.Find(Id);
-            if (productCategories == null)
+            ProductCategory productCategory = context.Find(Id);
+            if (productCategory == null)
             {
                 return HttpNotFound();
             }
             else
             {
-                return View(productCategories);
+                return View(productCategory);
             }
         }
 
         [HttpPost]
-        public ActionResult Edit(ProductCategory productCategories, string Id)
+        public ActionResult Edit(ProductCategory product, string Id)
         {
-            ProductCategory productCatToEdit = context.Find(Id);
-            if (productCatToEdit == null)
+            ProductCategory productCategoryToEdit = context.Find(Id);
+
+            if (productCategoryToEdit == null)
             {
                 return HttpNotFound();
             }
@@ -70,10 +72,11 @@ namespace MotoGear.WebUI.Controllers
             {
                 if (!ModelState.IsValid)
                 {
-                    return View(productCategories);
+                    return View(product);
                 }
-                productCatToEdit.Category = productCategories.Category;
-      
+
+                productCategoryToEdit.Category = product.Category;
+
                 context.Commit();
 
                 return RedirectToAction("Index");
@@ -82,14 +85,15 @@ namespace MotoGear.WebUI.Controllers
 
         public ActionResult Delete(string Id)
         {
-            ProductCategory productCatToDelete = context.Find(Id);
-            if (productCatToDelete == null)
+            ProductCategory productCategoryToDelete = context.Find(Id);
+
+            if (productCategoryToDelete == null)
             {
                 return HttpNotFound();
             }
             else
             {
-                return View(productCatToDelete);
+                return View(productCategoryToDelete);
             }
         }
 
@@ -97,8 +101,9 @@ namespace MotoGear.WebUI.Controllers
         [ActionName("Delete")]
         public ActionResult ConfirmDelete(string Id)
         {
-            ProductCategory productCatToDelete = context.Find(Id);
-            if (productCatToDelete == null)
+            ProductCategory productCategoryToDelete = context.Find(Id);
+
+            if (productCategoryToDelete == null)
             {
                 return HttpNotFound();
             }
@@ -109,6 +114,5 @@ namespace MotoGear.WebUI.Controllers
                 return RedirectToAction("Index");
             }
         }
-
     }
 }

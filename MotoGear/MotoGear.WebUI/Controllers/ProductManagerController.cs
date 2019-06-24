@@ -4,17 +4,20 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using MotoGear.Core.Models;
+using MotoGear.Core.ViewModels;
 using MotoGear.DataAccess.InMemory;
 
 namespace MotoGear.WebUI.Controllers
 {
     public class ProductManagerController : Controller
     {
-        ProductRepo context;
+        InMemoryRepository<Product> context;
+        InMemoryRepository<ProductCategory> productCategories;
 
         public ProductManagerController()
         {
-            context = new ProductRepo();
+            context = new InMemoryRepository<Product>();
+            productCategories = new InMemoryRepository<ProductCategory>();
         }
         // GET: ProductManager
         public ActionResult Index()
@@ -25,8 +28,11 @@ namespace MotoGear.WebUI.Controllers
 
         public ActionResult Create()
         {
-            Product product = new Product();
-            return View(product);
+            ProductManagerViewModel viewModel = new ProductManagerViewModel();
+
+            viewModel.Product = new Product();
+            viewModel.ProductCategories = productCategories.Collection();
+            return View(viewModel);
         }
 
         [HttpPost]
@@ -43,6 +49,7 @@ namespace MotoGear.WebUI.Controllers
 
                 return RedirectToAction("Index");
             }
+
         }
 
         public ActionResult Edit(string Id)
@@ -54,7 +61,11 @@ namespace MotoGear.WebUI.Controllers
             }
             else
             {
-                return View(product);
+                ProductManagerViewModel viewModel = new ProductManagerViewModel();
+                viewModel.Product = product;
+                viewModel.ProductCategories = productCategories.Collection();
+
+                return View(viewModel);
             }
         }
 
@@ -62,6 +73,7 @@ namespace MotoGear.WebUI.Controllers
         public ActionResult Edit(Product product, string Id)
         {
             Product productToEdit = context.Find(Id);
+
             if (productToEdit == null)
             {
                 return HttpNotFound();
@@ -88,6 +100,7 @@ namespace MotoGear.WebUI.Controllers
         public ActionResult Delete(string Id)
         {
             Product productToDelete = context.Find(Id);
+
             if (productToDelete == null)
             {
                 return HttpNotFound();
@@ -103,6 +116,7 @@ namespace MotoGear.WebUI.Controllers
         public ActionResult ConfirmDelete(string Id)
         {
             Product productToDelete = context.Find(Id);
+
             if (productToDelete == null)
             {
                 return HttpNotFound();
@@ -114,6 +128,5 @@ namespace MotoGear.WebUI.Controllers
                 return RedirectToAction("Index");
             }
         }
-
     }
 }
