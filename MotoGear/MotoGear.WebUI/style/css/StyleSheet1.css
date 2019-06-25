@@ -6,14 +6,15 @@
     display: inline-block;
     width: 40px;
     float: left;
-    padding-top: 5px;
+    margin-top: 6px;
     margin-left: 15px;
     margin-right: 10px;
+
 }
 
-.header {
-    display: inline-block;
-    background-color: white;
+#header {
+    border-bottom: 3px solid black;
+    background-color: black;
     width: 100%;
-    color:red;
+
 }

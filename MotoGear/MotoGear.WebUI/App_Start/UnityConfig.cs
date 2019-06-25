@@ -1,6 +1,7 @@
 using MotoGear.Core.Contracts;
 using MotoGear.Core.Models;
 using MotoGear.DataAccess.InMemory;
+using MotoGear.DataAccess.SQL;
 using System;
 
 using Unity;
@@ -46,8 +47,8 @@ namespace MotoGear.WebUI
             // TODO: Register your type's mappings here.
             // container.RegisterType<IProductRepository, ProductRepository>();
 
-            container.RegisterType<IRepository<Product>, InMemoryRepository<Product>>();
-            container.RegisterType<IRepository<ProductCategory>, InMemoryRepository<ProductCategory>>();
+            container.RegisterType<IRepository<Product>, SQLRepository<Product>>();
+            container.RegisterType<IRepository<ProductCategory>, SQLRepository<ProductCategory>>();
         }
     }
 }
