@@ -263,7 +263,7 @@
     <Content Include="Content\css\StyleSheet1.css" />
     <Content Include="Content\images\gsxr.jpg" />
     <Content Include="Content\images\helmet.jpg" />
-    <Content Include="Content\ProductImages\redsprocket.jpg" />
+    <Content Include="Content\images\redsprocket.jpg" />
     <Content Include="Content\images\shifter.png" />
     <Content Include="Content\images\shifter1.jpg" />
     <Content Include="Content\images\Sprocketangle.jpg" />
@@ -309,6 +309,7 @@
     <Content Include="Views\ProductCategoryManager\Edit.cshtml" />
     <Content Include="Views\ProductCategoryManager\Delete.cshtml" />
     <Content Include="Views\ProductManager\Create.cshtml" />
+    <Content Include="Views\Home\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
