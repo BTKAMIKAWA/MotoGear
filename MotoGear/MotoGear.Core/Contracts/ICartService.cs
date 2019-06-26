@@ -14,5 +14,6 @@ namespace MotoGear.Core.Contracts
         List<CartItemViewModel> GetCartItems(HttpContextBase httpContext);
         CartSummaryViewModel GetCartSummary(HttpContextBase httpContext);
         void RemoveFromShoppingCart(HttpContextBase httpContext, string itemId);
+        void ClearCart(HttpContextBase httpContext);
     }
 }

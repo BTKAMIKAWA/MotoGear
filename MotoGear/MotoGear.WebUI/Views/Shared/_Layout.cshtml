@@ -29,6 +29,9 @@
                     <li>@Html.ActionLink("Category Admin", "Index", "ProductCategoryManager")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
+                @{ 
+                    Html.RenderAction("CartSummary", "ShoppingCart");
+                }
             </div>
         </div>
     </div>

@@ -154,5 +154,12 @@ namespace MotoGear.Services
                 return model;
             }
         }
+
+        public void ClearCart(HttpContextBase httpContext)
+        {
+            ShoppingCart shoppingCart = GetShoppingCart(httpContext, false);
+            shoppingCart.CartItems.Clear();
+            shoppingCartContext.Commit();
+        }
     }
 }
