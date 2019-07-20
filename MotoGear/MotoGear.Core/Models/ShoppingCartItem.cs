@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace MotoGear.Core.Models
 {
-    public class CartItem : BaseEntity
+    public class ShoppingCartItem : BaseEntity
     {
-        public string CartId { get; set; }
+        public string ShoppingCartId { get; set; }
         public string ProductId { get; set; }
         public int Quantity { get; set; }
     }

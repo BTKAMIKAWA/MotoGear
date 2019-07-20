@@ -8,10 +8,10 @@ namespace MotoGear.Core.Models
 {
     public class ShoppingCart : BaseEntity
     {
-        public virtual ICollection<CartItem> CartItems { get; set; }
+        public virtual ICollection<ShoppingCartItem> ShoppingCartItems { get; set; }
         public ShoppingCart()
         {
-            this.CartItems = new List<CartItem>();
+            this.ShoppingCartItems = new List<ShoppingCartItem>();
         }
     }
 }

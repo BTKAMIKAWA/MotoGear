@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MotoGear.Core.ViewModels
 {
-    public class CartItemViewModel
+    public class ShoppingCartItemViewModel
     {
         public string Id { get; set; }
         public int Quantity { get; set; }

@@ -43,18 +43,33 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Contracts\ICartService.cs" />
     <Compile Include="Contracts\IRepository.cs" />
     <Compile Include="Models\BaseEntity.cs" />
-    <Compile Include="Models\CartItem.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\ProductCategory.cs" />
     <Compile Include="Models\ShoppingCart.cs" />
+    <Compile Include="Models\ShoppingCartItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewModels\CartItemViewModel.cs" />
-    <Compile Include="ViewModels\CartSummaryViewModel.cs" />
     <Compile Include="ViewModels\ProductListViewModel.cs" />
     <Compile Include="ViewModels\ProductManagerViewModel.cs" />
+    <Compile Include="ViewModels\ShoppingCartItemViewModel.cs" />
+    <Compile Include="ViewModels\ShoppingCartSummaryViewModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="bin\Debug\MotoGear.Core.dll" />
+    <Content Include="bin\Debug\MotoGear.Core.pdb" />
+    <Content Include="obj\Debug\MotoGear.Core.csproj.FileListAbsolute.txt" />
+    <Content Include="obj\Debug\MotoGear.Core.dll" />
+    <Content Include="obj\Debug\MotoGear.Core.pdb" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
+    <None Include="obj\Debug\MotoGear.Core.csproj.CoreCompileInputs.cache" />
+    <None Include="obj\Debug\MotoGear.Core.csprojAssemblyReference.cache" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="bin\Release\" />
+    <Folder Include="obj\Debug\TempPE\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

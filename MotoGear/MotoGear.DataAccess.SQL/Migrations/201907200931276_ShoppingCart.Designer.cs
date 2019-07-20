@@ -7,13 +7,13 @@ namespace MotoGear.DataAccess.SQL.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class AddBasket : IMigrationMetadata
+    public sealed partial class ShoppingCart : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AddBasket));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(ShoppingCart));
         
         string IMigrationMetadata.Id
         {
-            get { return "201906260432021_AddBasket"; }
+            get { return "201907200931276_ShoppingCart"; }
         }
         
         string IMigrationMetadata.Source
