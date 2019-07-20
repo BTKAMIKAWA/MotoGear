@@ -1,0 +1,6 @@
+﻿@model MotoGear.Core.ViewModels.ShoppingCartSummaryViewModel
+
+    <ul style="padding-top: 15px" class="nav navbar-nav navbar-right">
+        <li><a href="@Url.Action("Index", "ShoppingCart")">@Model.ShoppingCartCount items</a></li>
+        <li><a href="@Url.Action("Index", "ShoppingCart")">@String.Format("{0:c}", Model.ShoppingCartTotal)</a></li>
+    </ul>

@@ -2,6 +2,7 @@ using MotoGear.Core.Contracts;
 using MotoGear.Core.Models;
 using MotoGear.DataAccess.InMemory;
 using MotoGear.DataAccess.SQL;
+using MotoGear.Services;
 using System;
 
 using Unity;
@@ -49,6 +50,9 @@ namespace MotoGear.WebUI
 
             container.RegisterType<IRepository<Product>, SQLRepository<Product>>();
             container.RegisterType<IRepository<ProductCategory>, SQLRepository<ProductCategory>>();
+            container.RegisterType<IRepository<ShoppingCart>, SQLRepository<ShoppingCart>>();
+            container.RegisterType<IRepository<ShoppingCartItem>, SQLRepository<ShoppingCartItem>>();
+            container.RegisterType<IShoppingCartService, ShoppingCartService>();
         }
     }
 }
