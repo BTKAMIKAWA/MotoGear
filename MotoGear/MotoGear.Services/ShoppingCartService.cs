@@ -1,5 +1,6 @@
 ﻿using MotoGear.Core.Contracts;
 using MotoGear.Core.Models;
+using MotoGear.Core.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ using System.Web;
 
 namespace MotoGear.Services
 {
-    class ShoppingCartService
+    public class ShoppingCartService : IShoppingCartService
     {
         IRepository<Product> productContext;
         IRepository<ShoppingCart> shoppingCartContext;
@@ -99,6 +100,51 @@ namespace MotoGear.Services
             {
                 shoppingCart.ShoppingCartItems.Remove(item);
                 shoppingCartContext.Commit();
+            }
+        }
+
+        public List<ShoppingCartItemViewModel> GetShoppingCartItems(HttpContextBase httpContext)
+        {
+            ShoppingCart shoppingCart = GetShoppingCart(httpContext, false);
+
+            if (shoppingCart != null)
+            {
+                var results = (from b in shoppingCart.ShoppingCartItems
+                               join p in productContext.Collection() on b.ProductId equals p.Id
+                               select new ShoppingCartItemViewModel()
+                               {
+                                   Id = b.Id,
+                                   Quantity = b.Quantity,
+                                   ProductName = p.Name,
+                                   Image = p.Image,
+                                   Price = p.Price
+                               }).ToList();
+                return results;
+            }
+            else
+            {
+                return new List<ShoppingCartItemViewModel>();
+            }
+        }
+
+        public ShoppingCartSummaryViewModel GetShoppingCartSummary(HttpContextBase httpContext)
+        {
+            ShoppingCart shoppingCart = GetShoppingCart(httpContext, false);
+            ShoppingCartSummaryViewModel model = new ShoppingCartSummaryViewModel(0, 0);
+            if(shoppingCart != null)
+            {
+                int? shoppingCartCount = (from item in shoppingCart.ShoppingCartItems select item.Quantity).Sum();
+
+                decimal? shoppingCartTotal = (from item in shoppingCart.ShoppingCartItems join p in productContext.Collection() on item.ProductId equals p.Id select item.Quantity * p.Price).Sum();
+
+                model.ShoppingCartCount = shoppingCartCount ?? 0;
+                model.ShoppingCartTotal = shoppingCartTotal ?? decimal.Zero;
+
+                return model;
+            }
+            else
+            {
+                return model;
             }
         }
     }
