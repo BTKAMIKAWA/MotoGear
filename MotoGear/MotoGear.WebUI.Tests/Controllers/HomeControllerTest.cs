@@ -16,21 +16,8 @@ namespace MotoGear.WebUI.Tests.Controllers
         public void Index()
         {
             // Arrange
- 
+          
         }
 
-        [TestMethod]
-        public void About()
-        {
-            // Arrange
-  
-        }
-
-        [TestMethod]
-        public void Contact()
-        {
-            // Arrange
-
-        }
     }
 }

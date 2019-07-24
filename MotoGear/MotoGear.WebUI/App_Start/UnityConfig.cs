@@ -52,6 +52,7 @@ namespace MotoGear.WebUI
             container.RegisterType<IRepository<ProductCategory>, SQLRepository<ProductCategory>>();
             container.RegisterType<IRepository<ShoppingCart>, SQLRepository<ShoppingCart>>();
             container.RegisterType<IRepository<ShoppingCartItem>, SQLRepository<ShoppingCartItem>>();
+            container.RegisterType<IRepository<Customer>, SQLRepository<Customer>>();
             container.RegisterType<IShoppingCartService, ShoppingCartService>();
         }
     }
