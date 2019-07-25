@@ -10,12 +10,14 @@ namespace MotoGear.WebUI.Controllers
 {
     public class ShoppingCartController : Controller
     {
+        IRepository<Customer> customers;
         IShoppingCartService shoppingCartService;
         IOrderService orderService;
-        public ShoppingCartController(IShoppingCartService ShoppingCartService, IOrderService OrderService)
+        public ShoppingCartController(IShoppingCartService ShoppingCartService, IOrderService OrderService, IRepository<Customer> Customers)
         {
             this.shoppingCartService = ShoppingCartService;
             this.orderService = OrderService;
+            this.customers = Customers;
         }
         // GET: ShoppingCart
         public ActionResult Index()
@@ -45,16 +47,37 @@ namespace MotoGear.WebUI.Controllers
             return PartialView(shoppingCartSummary);
         }
 
+        [Authorize]
         public ActionResult Checkout()
         {
-            return View();
+            Customer customer = customers.Collection().FirstOrDefault(c => c.Email == User.Identity.Name);
+            if (customer != null)
+            {
+                Order order = new Order()
+                {
+                    Email = customer.Email,
+                    City = customer.City,
+                    State = customer.State,
+                    Street = customer.Street,
+                    FirstName = customer.FirstName,
+                    LastName = customer.LastName,
+                    ZipCode=customer.ZipCode
+                };
+                return View(order);
+            }
+            else
+            {
+                return RedirectToAction("Error");
+            }           
         }
 
         [HttpPost]
+        [Authorize]
         public ActionResult Checkout(Order order)
         {
             var shoppingCartItems = shoppingCartService.GetShoppingCartItems(this.HttpContext);
             order.OrderStatus = "Order Created";
+            order.Email = User.Identity.Name;
 
             //process payment
 
