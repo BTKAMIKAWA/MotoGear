@@ -18,3 +18,7 @@
     width: 100%;
 
 }
+footer {
+    float: left;
+    margin-left: 50px;
+}
