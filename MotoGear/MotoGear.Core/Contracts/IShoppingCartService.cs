@@ -8,11 +8,12 @@ using System.Web;
 
 namespace MotoGear.Core.Contracts
 {
-    public interface ICartService
+    public interface IShoppingCartService
     {
         void AddToShoppingCart(HttpContextBase httpContext, string productId);
-        List<CartItemViewModel> GetCartItems(HttpContextBase httpContext);
-        CartSummaryViewModel GetCartSummary(HttpContextBase httpContext);
         void RemoveFromShoppingCart(HttpContextBase httpContext, string itemId);
+        List<ShoppingCartItemViewModel> GetShoppingCartItems(HttpContextBase httpContext);
+        ShoppingCartSummaryViewModel GetShoppingCartSummary(HttpContextBase httpContext);
+        void ClearShoppingCart(HttpContextBase httpContext);
     }
 }

@@ -53,9 +53,17 @@
     <Compile Include="Migrations\201906250110270_Initial.Designer.cs">
       <DependentUpon>201906250110270_Initial.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201906260432021_AddBasket.cs" />
-    <Compile Include="Migrations\201906260432021_AddBasket.Designer.cs">
-      <DependentUpon>201906260432021_AddBasket.cs</DependentUpon>
+    <Compile Include="Migrations\201907200931276_ShoppingCart.cs" />
+    <Compile Include="Migrations\201907200931276_ShoppingCart.Designer.cs">
+      <DependentUpon>201907200931276_ShoppingCart.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907240029490_AddCustomers.cs" />
+    <Compile Include="Migrations\201907240029490_AddCustomers.Designer.cs">
+      <DependentUpon>201907240029490_AddCustomers.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907240742291_Orders.cs" />
+    <Compile Include="Migrations\201907240742291_Orders.Designer.cs">
+      <DependentUpon>201907240742291_Orders.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -75,8 +83,14 @@
     <EmbeddedResource Include="Migrations\201906250110270_Initial.resx">
       <DependentUpon>201906250110270_Initial.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201906260432021_AddBasket.resx">
-      <DependentUpon>201906260432021_AddBasket.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201907200931276_ShoppingCart.resx">
+      <DependentUpon>201907200931276_ShoppingCart.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907240029490_AddCustomers.resx">
+      <DependentUpon>201907240029490_AddCustomers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907240742291_Orders.resx">
+      <DependentUpon>201907240742291_Orders.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

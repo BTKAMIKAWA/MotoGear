@@ -10,14 +10,14 @@ using System.Web;
 
 namespace MotoGear.Services
 {
-    public class CartService : ICartService
+    public class ShoppingCartService : IShoppingCartService
     {
         IRepository<Product> productContext;
         IRepository<ShoppingCart> shoppingCartContext;
 
         public const string ShoppingCartSessionName = "eCommerceShoppingCart";
 
-        public CartService(IRepository<Product> ProductContext, IRepository<ShoppingCart> ShoppingCartContext)
+        public ShoppingCartService(IRepository<Product> ProductContext, IRepository<ShoppingCart> ShoppingCartContext)
         {
             this.shoppingCartContext = ShoppingCartContext;
             this.productContext = ProductContext;
@@ -29,10 +29,10 @@ namespace MotoGear.Services
 
             ShoppingCart shoppingCart = new ShoppingCart();
 
-            if (cookie != null)
+            if(cookie != null)
             {
                 string shoppingCartId = cookie.Value;
-                if (!string.IsNullOrEmpty(shoppingCartId))
+                if(!string.IsNullOrEmpty(shoppingCartId))
                 {
                     shoppingCart = shoppingCartContext.Find(shoppingCartId);
                 }
@@ -51,7 +51,6 @@ namespace MotoGear.Services
                     shoppingCart = CreateNewShoppingCart(httpContext);
                 }
             }
-
             return shoppingCart;
         }
 
@@ -63,7 +62,7 @@ namespace MotoGear.Services
 
             HttpCookie cookie = new HttpCookie(ShoppingCartSessionName);
             cookie.Value = shoppingCart.Id;
-            cookie.Expires = DateTime.Now.AddDays(3);
+            cookie.Expires = DateTime.Now.AddDays(1);
             httpContext.Response.Cookies.Add(cookie);
 
             return shoppingCart;
@@ -72,18 +71,17 @@ namespace MotoGear.Services
         public void AddToShoppingCart(HttpContextBase httpContext, string productId)
         {
             ShoppingCart shoppingCart = GetShoppingCart(httpContext, true);
-            CartItem item = shoppingCart.CartItems.FirstOrDefault(i => i.ProductId == productId);
+            ShoppingCartItem item = shoppingCart.ShoppingCartItems.FirstOrDefault(i => i.ProductId == productId);
 
-            if (item == null)
+            if(item==null)
             {
-                item = new CartItem()
+                item = new ShoppingCartItem()
                 {
-                    CartId = shoppingCart.Id,
+                    ShoppingCartId = shoppingCart.Id,
                     ProductId = productId,
                     Quantity = 1
                 };
-
-                shoppingCart.CartItems.Add(item);
+                shoppingCart.ShoppingCartItems.Add(item);
             }
             else
             {
@@ -96,53 +94,48 @@ namespace MotoGear.Services
         public void RemoveFromShoppingCart(HttpContextBase httpContext, string itemId)
         {
             ShoppingCart shoppingCart = GetShoppingCart(httpContext, true);
-            CartItem item = shoppingCart.CartItems.FirstOrDefault(i => i.ProductId == itemId);
+            ShoppingCartItem item = shoppingCart.ShoppingCartItems.FirstOrDefault(i => i.Id == itemId);
 
             if (item != null)
             {
-                shoppingCart.CartItems.Remove(item);
+                shoppingCart.ShoppingCartItems.Remove(item);
                 shoppingCartContext.Commit();
             }
         }
 
-        public List<CartItemViewModel> GetCartItems(HttpContextBase httpContext)
+        public List<ShoppingCartItemViewModel> GetShoppingCartItems(HttpContextBase httpContext)
         {
             ShoppingCart shoppingCart = GetShoppingCart(httpContext, false);
 
             if (shoppingCart != null)
             {
-                var results = (from c in shoppingCart.CartItems
-                               join p in productContext.Collection() on c.ProductId equals p.Id
-                               select new CartItemViewModel()
+                var results = (from b in shoppingCart.ShoppingCartItems
+                               join p in productContext.Collection() on b.ProductId equals p.Id
+                               select new ShoppingCartItemViewModel()
                                {
-                                   Id = c.Id,
-                                   Quantity = c.Quantity,
+                                   Id = b.Id,
+                                   Quantity = b.Quantity,
                                    ProductName = p.Name,
                                    Image = p.Image,
                                    Price = p.Price
-                               }
-                              ).ToList();
+                               }).ToList();
                 return results;
             }
             else
             {
-                return new List<CartItemViewModel>();
+                return new List<ShoppingCartItemViewModel>();
             }
-
         }
 
-        public CartSummaryViewModel GetCartSummary(HttpContextBase httpContext)
+        public ShoppingCartSummaryViewModel GetShoppingCartSummary(HttpContextBase httpContext)
         {
             ShoppingCart shoppingCart = GetShoppingCart(httpContext, false);
-            CartSummaryViewModel model = new CartSummaryViewModel(0, 0);
-            if (shoppingCart != null)
+            ShoppingCartSummaryViewModel model = new ShoppingCartSummaryViewModel(0, 0);
+            if(shoppingCart != null)
             {
-                int? shoppingCartCount = (from c in shoppingCart.CartItems
-                                          select c.Quantity).Sum();
+                int? shoppingCartCount = (from item in shoppingCart.ShoppingCartItems select item.Quantity).Sum();
 
-                decimal? shoppingCartTotal = (from d in shoppingCart.CartItems
-                                              join p in productContext.Collection() on d.ProductId equals p.Id
-                                              select d.Quantity * p.Price).Sum();
+                decimal? shoppingCartTotal = (from item in shoppingCart.ShoppingCartItems join p in productContext.Collection() on item.ProductId equals p.Id select item.Quantity * p.Price).Sum();
 
                 model.ShoppingCartCount = shoppingCartCount ?? 0;
                 model.ShoppingCartTotal = shoppingCartTotal ?? decimal.Zero;
@@ -153,6 +146,13 @@ namespace MotoGear.Services
             {
                 return model;
             }
+        }
+
+        public void ClearShoppingCart(HttpContextBase httpContext)
+        {
+            ShoppingCart shoppingCart = GetShoppingCart(httpContext, false);
+            shoppingCart.ShoppingCartItems.Clear();
+            shoppingCartContext.Commit();
         }
     }
 }
