@@ -348,6 +348,8 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\ShoppingCart\Index.cshtml" />
     <Content Include="Views\ShoppingCart\ShoppingCartSummary.cshtml" />
+    <Content Include="Views\ShoppingCart\Checkout.cshtml" />
+    <Content Include="Views\ShoppingCart\ThankYou.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
